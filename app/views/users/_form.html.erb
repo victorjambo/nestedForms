@@ -1,0 +1,36 @@
+<%= simple_form_for(user) do |f| %>
+  <% if user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-inputs">
+    <%= f.input :name %>
+  </div>
+  
+  <table class="table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Address</th>
+      </tr>
+    </thead>
+    <tbody class="field">
+      <%= f.simple_fields_for :addresses do |builder| %>
+        <%= render 'address', f: builder %>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="form-actions">
+    <%= f.submit %>
+    <%= link_to_add_row('Add Address', f, :addresses, class: 'btn btn-primary') %>
+  </div>
+<% end %>
